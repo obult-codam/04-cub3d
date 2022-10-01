@@ -6,12 +6,17 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:31:33 by obult         #+#    #+#                 */
-/*   Updated: 2022/09/29 21:32:03 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/01 19:05:39 by oswin         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAY_H
 # define RAY_H
+
+# include <limits.h>
+
+# define PI 3.1415926535
+# define ERROR INT_MAX
 
 // typedef struct	s_angle
 // {
@@ -35,6 +40,8 @@ typedef struct	s_player
 typedef struct	s_data
 {
 	char		**map;
+	int			x_max;
+	int			y_max;
 	t_player	player;
 }				t_data;
 
