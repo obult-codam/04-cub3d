@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/01 23:04:13 by oswin         ########   odam.nl         */
+/*   Updated: 2022/10/01 23:34:48 by oswin         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,9 @@
 #include <stdio.h>
 
 /*
- *  this will shoot a ray and return the len in horizontal or vertical
+ *  This function calls the distance towards the cell border over an axis.
+ *	The angle is needed to return a negative number for back- and downwards.
  */
-
-// double	shoot_ray_h(t_data data, double angle, double x, double y)
-// {
-// 	double	x_progress;
-// 	double	y_distance;
-
-// 	y_distance = modf(y, NULL);
-// 	if (y_distance == 0)
-// 		y_distance = 1;
-// 	x_progress = sin(angle) * y_distance;
-// 	if (data.map[(int)round(y + y_distance)][(int)round(x + x_progress)] != '0')
-// 		return (x_progress / cos(angle));
-// 	return (x_progress / cos(angle) + shoot_ray_h(data, angle, x + x_progress, y + y_distance));
-// }
-
 double	calc_distance(double z, double angle)
 {
 	double	tmp;
@@ -49,17 +35,10 @@ double	calc_distance(double z, double angle)
 	return (-1 * tmp);
 }
 
-// double	shoot_ray_h2(t_data data, double angle, double x, double y)
-// {
-// 	double	distance;
-// 	double	y_diff;
-
-// 	y_diff = calc_distance(y);
-
-// 	distance = y_diff / cos(angle);
-// 	// return (0);
-// }
-
+/*
+ *	This Function calculates the distance untill a ray with an angle against the north
+ *	has reached an obstacle perpendicular with the x axis.
+ */
 double	max_x_dist(t_data data, double angle, double x, double y)
 {
 	double	x_dist;
@@ -81,7 +60,37 @@ double	max_x_dist(t_data data, double angle, double x, double y)
 	return (result + x_dist);
 }
 
-int	main(void)
+/*
+ *	This Function calculates the distance untill a ray with an angle against the north
+ *	has reached an obstacle perpendicular with the y axis.
+ */
+double	max_y_dist(t_data data, double angle, double x, double y)
+{
+	double	y_dist;
+	double	x_dist;
+	double	result;
+	double	anglePI;
+
+	anglePI = angle + (PI * 0.5);
+	x_dist = calc_distance(x, anglePI);
+	y_dist = tan(anglePI) * x_dist;
+	if ((int)round(y_dist + y) > data.x_max || (int)round(y_dist + y) < 1)
+		return (ERROR);
+	if (anglePI < 0.5 * PI || anglePI > 1.5 * PI)
+		if (data.map[(int)round(y + y_dist)][(int)round(x + x_dist)] != '0')
+			return (y_dist);
+	if (data.map[(int)round(y + y_dist) - 1][(int)round(x + x_dist) - 1] != '0')
+		return (y_dist);
+	result = max_x_dist(data, anglePI, y + y_dist, x + x_dist);
+	if (result == ERROR)
+		return (ERROR);
+	return (result + y_dist);
+}
+
+/*
+ *	This thing is here to test the functions.
+ */
+void	test_max_dist_calc(void)
 {
 	char *map[4];
 	t_data data;
@@ -107,5 +116,15 @@ int	main(void)
 
 	printf("next should be ERROR / INT_MAX\n");
 	printf("calc : %f\n", max_x_dist(data, PI / 2, 2, 2));
+
+	printf("\nnext up is y\n");
+
+	printf("next should be same as third one from x\n");
+	printf("calc : %f\n", max_y_dist(data, PI / 6 * 8, 2, 2));
+}
+
+int	main(void)
+{
+	test_max_dist_calc();
 	return (0);
 }
