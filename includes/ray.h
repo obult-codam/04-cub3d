@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:31:33 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/01 19:05:39 by oswin         ########   odam.nl         */
+/*   Updated: 2022/10/02 13:44:30 by oswin         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include <limits.h>
 
 # define PI 3.1415926535
-# define ERROR INT_MAX
+# define ERROR 2147483648
 
 // typedef struct	s_angle
 // {
-// 	double	horizontal;
-// 	double	vertical;
+// 	float	horizontal;
+// 	float	vertical;
 // }				t_angle;
 
 enum direction{
@@ -33,8 +33,8 @@ enum direction{
 
 typedef struct	s_player
 {
-	double	h_coord;
-	double	v_coord;
+	float	x;
+	float	y;
 }				t_player;
 
 typedef struct	s_data
@@ -42,6 +42,7 @@ typedef struct	s_data
 	char		**map;
 	int			x_max;
 	int			y_max;
+	char		sign;
 	t_player	player;
 }				t_data;
 

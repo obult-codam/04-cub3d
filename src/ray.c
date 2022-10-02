@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/01 23:34:48 by oswin         ########   odam.nl         */
+/*   Updated: 2022/10/02 15:05:01 by oswin         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
  *  This function calls the distance towards the cell border over an axis.
  *	The angle is needed to return a negative number for back- and downwards.
  */
-double	calc_distance(double z, double angle)
+float	calc_distance(float z, float angle)
 {
-	double	tmp;
-	double	trash;
+	float	tmp;
+	float	trash;
 
-	tmp = modf(z, &trash);
+	tmp = modff(z, &trash);
 	if (angle < 0.5 * PI || angle > 1.5 * PI)
 	{
 		if (!tmp)
@@ -39,20 +39,20 @@ double	calc_distance(double z, double angle)
  *	This Function calculates the distance untill a ray with an angle against the north
  *	has reached an obstacle perpendicular with the x axis.
  */
-double	max_x_dist(t_data data, double angle, double x, double y)
+float	max_x_dist(t_data data, float angle, float x, float y)
 {
-	double	x_dist;
-	double	y_dist;
-	double	result;
+	float	x_dist;
+	float	y_dist;
+	float	result;
 
 	y_dist = calc_distance(y, angle);
-	x_dist = tan(angle) * y_dist;
-	if ((int)round(x_dist + x) > data.x_max || (int)round(x_dist + x) < 1)
+	x_dist = tanf(angle) * y_dist;
+	if ((int)roundf(x_dist + x) > data.x_max || (int)roundf(x_dist + x) < 1)
 		return (ERROR);
 	if (angle < 0.5 * PI || angle > 1.5 * PI)
-		if (data.map[(int)round(y + y_dist)][(int)round(x + x_dist)] != '0')
+		if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
 			return (x_dist);
-	if (data.map[(int)round(y + y_dist) - 1][(int)round(x + x_dist) - 1] != '0')
+	if (data.map[(int)roundf(y + y_dist) - 1][(int)roundf(x + x_dist) - 1] != '0')
 		return (x_dist);
 	result = max_x_dist(data, angle, x + x_dist, y + y_dist);
 	if (result == ERROR)
@@ -64,27 +64,50 @@ double	max_x_dist(t_data data, double angle, double x, double y)
  *	This Function calculates the distance untill a ray with an angle against the north
  *	has reached an obstacle perpendicular with the y axis.
  */
-double	max_y_dist(t_data data, double angle, double x, double y)
+float	max_y_dist(t_data data, float angle, float x, float y)
 {
-	double	y_dist;
-	double	x_dist;
-	double	result;
-	double	anglePI;
+	float	y_dist;
+	float	x_dist;
+	float	result;
+	float	anglePI;
 
 	anglePI = angle + (PI * 0.5);
 	x_dist = calc_distance(x, anglePI);
-	y_dist = tan(anglePI) * x_dist;
-	if ((int)round(y_dist + y) > data.x_max || (int)round(y_dist + y) < 1)
+	y_dist = tanf(anglePI) * x_dist;
+	if ((int)roundf(y_dist + y) > data.x_max || (int)roundf(y_dist + y) < 1)
 		return (ERROR);
 	if (anglePI < 0.5 * PI || anglePI > 1.5 * PI)
-		if (data.map[(int)round(y + y_dist)][(int)round(x + x_dist)] != '0')
+		if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
 			return (y_dist);
-	if (data.map[(int)round(y + y_dist) - 1][(int)round(x + x_dist) - 1] != '0')
+	if (data.map[(int)roundf(y + y_dist) - 1][(int)roundf(x + x_dist) - 1] != '0')
 		return (y_dist);
 	result = max_x_dist(data, anglePI, y + y_dist, x + x_dist);
 	if (result == ERROR)
 		return (ERROR);
 	return (result + y_dist);
+}
+
+float	positivef(float f)
+{
+	if (f < 0)
+		return (f * -1);
+	return (f);
+}
+
+float	max_dist(t_data *data, float angle)
+{
+	float	x_total;
+	float	y_total;
+
+	x_total = max_x_dist(*data, angle, data->player.x, data->player.y);
+	y_total = max_y_dist(*data, angle, data->player.x, data->player.y);
+	if (positivef(x_total) < positivef(y_total))
+	{
+		data->sign = 'x';
+		return (x_total);
+	}
+	data->sign = 'y';
+	return (y_total);
 }
 
 /*
@@ -102,25 +125,36 @@ void	test_max_dist_calc(void)
 	map[2] = b;
 	map[3] = a;
 	data.x_max = 3;
+	data.sign = 'o';
+
+	data.player.x = 2;
+	data.player.y = 2;
+
+	for (int i = 0; i < 12; i++)
+	{
+		printf("max dist (2, 2) %i : %f", i, max_dist(&data, PI / 12 * i));
+		printf(", s=%c\n", data.sign);
+	}
+	printf("sin(0.5PI) : %f\n", sinf(PI));
 
 
-	printf("next should be 1.1547005\n");
-	printf("calc : %f\n", max_x_dist(data, PI / 6, 1, 1));
+	// printf("next should be 1.1547005\n");
+	// printf("calc : %f\n", max_x_dist(data, PI / 6, 1, 1));
 
-	printf("next should be 0.577350\n");
-	printf("calc : %f\n", max_x_dist(data, PI / 6, 2, 2));
+	// printf("next should be 0.577350\n");
+	// printf("calc : %f\n", max_x_dist(data, PI / 6, 2, 2));
 
-	printf("next should be -0.577350\n");
-	printf("calc : %f\n", max_x_dist(data, PI / 6 * 7, 2, 2));
-	printf("this is incorrect because it now runs twice as far, not anymore since I fixed it\n");
+	// printf("next should be -0.577350\n");
+	// printf("calc : %f\n", max_x_dist(data, PI / 6 * 7, 2, 2));
+	// printf("this is incorrect because it now runs twice as far, not anymore since I fixed it\n");
 
-	printf("next should be ERROR / INT_MAX\n");
-	printf("calc : %f\n", max_x_dist(data, PI / 2, 2, 2));
+	// printf("next should be ERROR / INT_MAX\n");
+	// printf("calc : %f\n", max_x_dist(data, PI / 2, 2, 2));
 
-	printf("\nnext up is y\n");
+	// printf("\nnext up is y\n");
 
-	printf("next should be same as third one from x\n");
-	printf("calc : %f\n", max_y_dist(data, PI / 6 * 8, 2, 2));
+	// printf("next should be same as third one from x\n");
+	// printf("calc : %f\n", max_y_dist(data, PI / 6 * 8, 2, 2));
 }
 
 int	main(void)
