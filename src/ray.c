@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/02 22:33:19 by oswin         ########   odam.nl         */
+/*   Updated: 2022/10/02 23:21:31 by oswin         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ float	max_x_dist(t_data data, float angle, float x, float y)
 
 	y_dist = calc_distance(y, angle);
 	x_dist = tanf(angle) * y_dist;
-	if ((int)roundf(x_dist + x) > data.x_max || (int)roundf(x_dist + x) <= 1)
+	// if 
+	if ((int)roundf(x_dist + x) > data.x_max || (int)roundf(x_dist + x) < 1)
 		return (ERROR);
 	if ((int)y_dist + y > data.y_max)
 		return (0);
@@ -76,6 +77,7 @@ float	max_y_dist(t_data data, float angle, float x, float y)
 	anglePI = angle + (PI * 0.5);
 	x_dist = calc_distance(x, anglePI);
 	y_dist = tanf(anglePI) * x_dist;
+	printf("ydist: %i\n", (int)roundf(y_dist + y));
 	if ((int)roundf(y_dist + y) > data.y_max || (int)roundf(y_dist + y) < 1)
 		return (ERROR);
 	if ((int)x_dist + x > data.x_max)
@@ -111,9 +113,11 @@ float	max_dist(t_data *data, float angle)
 	{
 		data->sign = 'x';
 		return (x_total / sinf(angle));
+		// return (x_total);
 	}
 	data->sign = 'y';
 	return (y_total / sinf(angle + PI * 0.5));
+	// return (y_total);
 }
 
 /*
@@ -139,6 +143,8 @@ void	test_max_dist_calc(void)
 
 		printf("max dist (2, 2) PI/120 : %f", max_dist(&data, PI / 120));
 		printf(", s=%c\n", data.sign);
+
+	// it needs to work between and including 18 and 27 with coords of (3 . 3)
 	for (int i = 0; i < 36; i++)
 	{
 		printf("max dist (2, 2) %i : %f", i, max_dist(&data, PI / 36 * i));
