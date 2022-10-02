@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/02 15:05:01 by oswin         ########   odam.nl         */
+/*   Updated: 2022/10/02 22:33:19 by oswin         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ float	max_x_dist(t_data data, float angle, float x, float y)
 
 	y_dist = calc_distance(y, angle);
 	x_dist = tanf(angle) * y_dist;
-	if ((int)roundf(x_dist + x) > data.x_max || (int)roundf(x_dist + x) < 1)
+	if ((int)roundf(x_dist + x) > data.x_max || (int)roundf(x_dist + x) <= 1)
 		return (ERROR);
+	if ((int)y_dist + y > data.y_max)
+		return (0);
 	if (angle < 0.5 * PI || angle > 1.5 * PI)
 		if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
 			return (x_dist);
@@ -74,8 +76,10 @@ float	max_y_dist(t_data data, float angle, float x, float y)
 	anglePI = angle + (PI * 0.5);
 	x_dist = calc_distance(x, anglePI);
 	y_dist = tanf(anglePI) * x_dist;
-	if ((int)roundf(y_dist + y) > data.x_max || (int)roundf(y_dist + y) < 1)
+	if ((int)roundf(y_dist + y) > data.y_max || (int)roundf(y_dist + y) < 1)
 		return (ERROR);
+	if ((int)x_dist + x > data.x_max)
+		return (0);
 	if (anglePI < 0.5 * PI || anglePI > 1.5 * PI)
 		if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
 			return (y_dist);
@@ -101,13 +105,15 @@ float	max_dist(t_data *data, float angle)
 
 	x_total = max_x_dist(*data, angle, data->player.x, data->player.y);
 	y_total = max_y_dist(*data, angle, data->player.x, data->player.y);
+	if (x_total == ERROR && y_total == ERROR)
+		return (ERROR);
 	if (positivef(x_total) < positivef(y_total))
 	{
 		data->sign = 'x';
-		return (x_total);
+		return (x_total / sinf(angle));
 	}
 	data->sign = 'y';
-	return (y_total);
+	return (y_total / sinf(angle + PI * 0.5));
 }
 
 /*
@@ -125,17 +131,21 @@ void	test_max_dist_calc(void)
 	map[2] = b;
 	map[3] = a;
 	data.x_max = 3;
+	data.y_max = 3;
 	data.sign = 'o';
 
-	data.player.x = 2;
-	data.player.y = 2;
+	data.player.x = 3;
+	data.player.y = 3;
 
-	for (int i = 0; i < 12; i++)
+		printf("max dist (2, 2) PI/120 : %f", max_dist(&data, PI / 120));
+		printf(", s=%c\n", data.sign);
+	for (int i = 0; i < 36; i++)
 	{
-		printf("max dist (2, 2) %i : %f", i, max_dist(&data, PI / 12 * i));
+		printf("max dist (2, 2) %i : %f", i, max_dist(&data, PI / 36 * i));
 		printf(", s=%c\n", data.sign);
 	}
 	printf("sin(0.5PI) : %f\n", sinf(PI));
+	printf("%f\n", -0.0f / -0.0f);
 
 
 	// printf("next should be 1.1547005\n");
