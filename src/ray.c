@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/02 23:21:31 by oswin         ########   odam.nl         */
+/*   Updated: 2022/10/03 17:37:04 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,16 @@ float	max_x_dist(t_data data, float angle, float x, float y)
 	y_dist = calc_distance(y, angle);
 	x_dist = tanf(angle) * y_dist;
 	// if 
-	if ((int)roundf(x_dist + x) > data.x_max || (int)roundf(x_dist + x) < 1)
+	if ((int)roundf(x_dist + x) > data.x_max || (int)roundf(x_dist + x) < 0)
 		return (ERROR);
 	if ((int)y_dist + y > data.y_max)
 		return (0);
 	if (angle < 0.5 * PI || angle > 1.5 * PI)
 		if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
 			return (x_dist);
-	if (data.map[(int)roundf(y + y_dist) - 1][(int)roundf(x + x_dist) - 1] != '0')
+	if ((int)roundf(x_dist + x) < 1)
+		return (ERROR);
+	if (data.map[(int)roundf(y + y_dist) - 1][(int)roundf(x + x_dist)] != '0')
 		return (x_dist);
 	result = max_x_dist(data, angle, x + x_dist, y + y_dist);
 	if (result == ERROR)
@@ -77,17 +79,18 @@ float	max_y_dist(t_data data, float angle, float x, float y)
 	anglePI = angle + (PI * 0.5);
 	x_dist = calc_distance(x, anglePI);
 	y_dist = tanf(anglePI) * x_dist;
-	printf("ydist: %i\n", (int)roundf(y_dist + y));
-	if ((int)roundf(y_dist + y) > data.y_max || (int)roundf(y_dist + y) < 1)
+	if ((int)roundf(y_dist + y) > data.y_max || (int)roundf(y_dist + y) < 0)
 		return (ERROR);
 	if ((int)x_dist + x > data.x_max)
 		return (0);
-	if (anglePI < 0.5 * PI || anglePI > 1.5 * PI)
+	if (anglePI < 0.5 * PI || anglePI > 1.5 * PI)  // here is the issue!!
 		if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
 			return (y_dist);
-	if (data.map[(int)roundf(y + y_dist) - 1][(int)roundf(x + x_dist) - 1] != '0')
+	if ((int)roundf(y_dist + y) < 1)
+		return (ERROR);
+	if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist) - 1] != '0') //the coordinates minus Z nr Z is the problem here
 		return (y_dist);
-	result = max_x_dist(data, anglePI, y + y_dist, x + x_dist);
+	result = max_y_dist(data, anglePI, y + y_dist, x + x_dist);
 	if (result == ERROR)
 		return (ERROR);
 	return (result + y_dist);
@@ -116,7 +119,7 @@ float	max_dist(t_data *data, float angle)
 		// return (x_total);
 	}
 	data->sign = 'y';
-	return (y_total / sinf(angle + PI * 0.5));
+	return (y_total / sinf(angle + (PI * 0.5)));
 	// return (y_total);
 }
 
@@ -138,16 +141,16 @@ void	test_max_dist_calc(void)
 	data.y_max = 3;
 	data.sign = 'o';
 
-	data.player.x = 3;
-	data.player.y = 3;
+	data.player.x = 2.9;
+	data.player.y = 2.9;
 
 		printf("max dist (2, 2) PI/120 : %f", max_dist(&data, PI / 120));
 		printf(", s=%c\n", data.sign);
 
 	// it needs to work between and including 18 and 27 with coords of (3 . 3)
-	for (int i = 0; i < 36; i++)
+	for (int i = 0; i < 72; i++)
 	{
-		printf("max dist (2, 2) %i : %f", i, max_dist(&data, PI / 36 * i));
+		printf("max dist (px, py) %i : %f", i, max_dist(&data, PI / 36 * i));
 		printf(", s=%c\n", data.sign);
 	}
 	printf("sin(0.5PI) : %f\n", sinf(PI));
