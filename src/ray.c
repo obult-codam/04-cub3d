@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/03 18:16:31 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/04 16:35:24 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ float	max_x_dist(t_data data, float angle, float x, float y)
 		return (ERROR);
 	if ((int)y_dist + y > data.y_max)
 		return (0);
-	if (angle < 0.5 * PI || angle > 1.5 * PI)
-		if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
+	if (angle > 0.5 * PI && angle < 1.5 * PI)
+		if (data.map[(int)roundf(y + y_dist) - 1][(int)roundf(x + x_dist)] != '0')
 			return (x_dist);
 	if ((int)roundf(y_dist + y) < 1)
 		return (ERROR);
-	if (data.map[(int)roundf(y + y_dist) - 1][(int)roundf(x + x_dist)] != '0')
+	if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
 		return (x_dist);
 	result = max_x_dist(data, angle, x + x_dist, y + y_dist);
 	if (result == ERROR)
@@ -82,12 +82,12 @@ float	max_y_dist(t_data data, float angle, float x, float y)
 		return (ERROR);
 	if ((int)x_dist + x > data.x_max)
 		return (0);
-	if (anglePI < 0.5 * PI || anglePI > 1.5 * PI)
-		if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
+	if (angle < 0 || angle > PI)	// this is the issue
+		if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist) - 1] != '0') //the coordinates minus Z nr Z is the problem here
 			return (y_dist);
 	if ((int)roundf(x_dist + x) < 1)
 		return (ERROR);
-	if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist) + 1] != '0') //the coordinates minus Z nr Z is the problem here
+	if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
 		return (y_dist);
 	result = max_y_dist(data, anglePI, y + y_dist, x + x_dist);
 	if (result == ERROR)
