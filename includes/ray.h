@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:31:33 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/02 13:44:30 by oswin         ########   odam.nl         */
+/*   Updated: 2022/10/05 16:13:42 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ typedef struct	s_data
 	t_player	player;
 }				t_data;
 
+float	positivef(float f);
 
 #endif

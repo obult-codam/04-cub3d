@@ -1,6 +1,6 @@
 
 NAME		= cub3d
-OBJ			= ray
+OBJ			= ray first_q
 OBJS		= $(addsuffix .o, $(addprefix obj/, ${OBJ}))
 CC			= gcc
 RM			= rm -f
