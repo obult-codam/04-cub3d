@@ -1,11 +1,11 @@
 
 NAME		= cub3d
-OBJ			= ray first_q
+OBJ			= ray
 OBJS		= $(addsuffix .o, $(addprefix obj/, ${OBJ}))
 CC			= gcc
 RM			= rm -f
 HEADER		= -I includes/ 
-CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g -lm
 
 all:		${NAME}
 

@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/05 15:22:22 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/05 16:13:18 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/09 17:31:26 by oswin         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static float	max_x_dist(t_data data, float angle, float x, float y)
 
 	y_dist = calc_distance_y(y);
 	x_dist = tanf(angle) * y_dist;
-	if ((int)roundf(y_dist + y) > data.y_max || (int)roundf(y_dist + y) < 0)
+	if (round_down(y_dist + y) > data.y_max || round_down(y_dist + y) < 0)
 		return (ERROR);
-	if ((int)roundf(x_dist + x) > data.x_max || (int)roundf(x_dist + x) < 0)
+	if (round_down(x_dist + x) > data.x_max || round_down(x_dist + x) < 0)
 		return (ERROR);
-	if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
+	if (data.map[round_down(y + y_dist)][round_down(x + x_dist)] != '0')
 		return (x_dist);
 	result = max_x_dist(data, angle, x + x_dist, y + y_dist);
 	if (result == ERROR)
@@ -70,11 +70,11 @@ static float	max_y_dist(t_data data, float angle, float x, float y)
 
 	x_dist = calc_distance_x(x);
 	y_dist = tanf(angle - (0.5 * PI)) * x_dist;
-	if ((int)roundf(y_dist + y) > data.y_max || (int)roundf(y_dist + y) < 0)
+	if (round_down(y_dist + y) > data.y_max || round_down(y_dist + y) < 0)
 		return (ERROR);
-	if ((int)roundf(x_dist + x) > data.x_max || (int)roundf(x_dist + x) < 0)
+	if (round_down(x_dist + x) > data.x_max || round_down(x_dist + x) < 0)
 		return (ERROR);
-	if (data.map[(int)roundf(y + y_dist)][(int)roundf(x + x_dist)] != '0')
+	if (data.map[round_down(y + y_dist)][round_down(x + x_dist)] != '0')
 		return (y_dist);
 	result = max_y_dist(data, angle, x + x_dist, y + y_dist);
 	if (result == ERROR)
