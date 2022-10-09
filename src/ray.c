@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/09 17:42:58 by oswin         ########   odam.nl         */
+/*   Updated: 2022/10/09 18:13:07 by oswin         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@
 int	round_down(float z)
 {
 	float	trash;
+	float	tmp;
 
-	return ((int)modff(z, &trash));
+	trash = modff(z, &tmp);
+	(void)trash;
+	return ((int)tmp);
 }
 
 /*
@@ -52,20 +55,22 @@ float	max_x_dist(t_data data, float angle, float x, float y)
 	float	y_dist;
 	float	result;
 
-	usleep(200);
 	y_dist = calc_distance_y(y, angle);
 	x_dist = tanf(angle) * y_dist;
+	// printf("x: dist %f, %f\n", x_dist, y_dist);
+	// printf("x, comb: dist %f, %f\n", x + x_dist, y + y_dist);
+	// printf("x, comb round_down: dist %i, %i\n", round_down(x + x_dist), round_down(y + y_dist));
 	if (round_down(x_dist + x) > data.x_max || round_down(x_dist + x) < 0)
 		return (ERROR);
 	if (round_down(y_dist + y) > data.y_max || round_down(y_dist + y) < 0)
 		return (ERROR);
-	// if (angle < 0.5 * PI || angle > 1.5 * PI)
+	if (angle < 0.5 * PI || angle > 1.5 * PI)
 		if (data.map[round_down(y + y_dist)][round_down(x + x_dist)] != '0')
 			return (x_dist);
-	// if (round_down(y_dist + y) < 1)
-	// 	return (ERROR);
-	// if (data.map[round_down(y + y_dist) - 1][round_down(x + x_dist)] != '0')
-	// 	return (x_dist);
+	if (round_down(y_dist + y) < 1)
+		return (ERROR);
+	if (data.map[round_down(y + y_dist) - 1][round_down(x + x_dist)] != '0')
+		return (x_dist);
 	result = max_x_dist(data, angle, x + x_dist, y + y_dist);
 	if (result == ERROR)
 		return (ERROR);
@@ -97,21 +102,21 @@ float	max_y_dist(t_data data, float angle, float x, float y)
 	float	result;
 	float	anglePI;
 
-	usleep(200);
 	anglePI = angle - (PI * 0.5);
 	x_dist = calc_distance_x(x, angle);
 	y_dist = tanf(anglePI) * x_dist;
+	// printf("y: dist %f, %f\n", x_dist, y_dist);
 	if (round_down(y_dist + y) > data.y_max || round_down(y_dist + y) < 0)
 		return (ERROR);
 	if (round_down(x_dist + x) > data.x_max || round_down(x_dist + x) < 0)
 		return (ERROR);
-	// if (angle > 0 && angle < PI)
+	if (angle > 0 && angle < PI)	//
 		if (data.map[round_down(y + y_dist)][round_down(x + x_dist)] != '0')
 			return (y_dist);
-	// if (round_down(x_dist + x) < 1)
-	// 	return (ERROR);
-	// if (data.map[round_down(y + y_dist)][round_down(x + x_dist) - 1] != '0')
-	// 	return (y_dist);
+	if (round_down(x_dist + x) < 1)	//
+		return (ERROR);	//
+	if (data.map[round_down(y + y_dist)][round_down(x + x_dist) - 1] != '0')	//
+		return (y_dist);	//
 	result = max_y_dist(data, angle, x + x_dist, y + y_dist);
 	if (result == ERROR)
 		return (ERROR);
@@ -173,8 +178,8 @@ void	test_max_dist_calc_float(char ** map)
 	data.y_max = 3;
 	data.sign = 'o';
 
-	data.player.x = 2.5;
-	data.player.y = 2.5;
+	data.player.x = 1.8;
+	data.player.y = 1.8;
 	for (int i = 0; i < 18 * 4; i++)
 	{
 		if (i % 18 == 0)
@@ -186,7 +191,7 @@ void	test_max_dist_calc_float(char ** map)
 
 int	main(void)
 {
-	test_max_dist_calc((char *[]){"1111", "1001", "1001", "1111"});
+	// test_max_dist_calc((char *[]){"1111", "1001", "1001", "1111"});
 	test_max_dist_calc_float((char *[]){"1111", "1001", "1001", "1111"});
 	return (0);
 }
