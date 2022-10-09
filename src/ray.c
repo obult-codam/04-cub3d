@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/09 18:13:07 by oswin         ########   odam.nl         */
+/*   Updated: 2022/10/09 18:35:14 by oswin         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,22 +130,37 @@ float	positivef(float f)
 	return (f);
 }
 
+float	straight_up_distance(t_data *data)
+{
+	int	i;
+	float	trash;
+
+	i = 0;
+	data->sign = 'y';
+	while (data->map[round_down(data->player.y)][round_down(data->player.x) + i] == '0')
+		i++;
+	return ((float)i - modff(data->player.x, &trash));
+
+}
+
 float	max_dist(t_data *data, float angle)
 {
 	float	x_total;
 	float	y_total;
 
-	x_total = max_x_dist(*data, angle, data->player.x, data->player.y);
-	y_total = max_y_dist(*data, angle, data->player.x, data->player.y);
+	if (angle == 0)
+		return (straight_up_distance(data));
+	x_total = max_x_dist(*data, angle, data->player.x, data->player.y) / sinf(angle);
+	y_total = max_y_dist(*data, angle, data->player.x, data->player.y) / sinf(angle - PI * 0.5);
 	if (x_total == ERROR && y_total == ERROR)
 		return (ERROR);
 	if (positivef(x_total) < positivef(y_total))
 	{
 		data->sign = 'x';
-		return (x_total / sinf(angle));
+		return (x_total);
 	}
 	data->sign = 'y';
-	return (y_total / sinf(angle - (PI * 0.5)));
+	return (y_total);
 }
 
 /*
