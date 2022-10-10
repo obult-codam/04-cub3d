@@ -1,14 +1,20 @@
 
 NAME		= cub3d
-OBJ			= ray ray_utils
+OBJ			= main ray ray_utils
 OBJS		= $(addsuffix .o, $(addprefix obj/, ${OBJ}))
-RAY_TEST_OBJS	= ${OBJS} obj/ray_test.o
+RAY_TEST_OBJS	= $(addsuffix .o, $(addprefix obj/, ray_test ray ray_utils))
 CC			= gcc
 RM			= rm -f
-HEADER		= -I includes/ 
+HEADER		= -I includes/ -I mlx42/include/MLX42/
 CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g
+LIBS		= $(LIBMLX)/libmlx42.a
+LINKFLAGS	= -lglfw -ldl -lm -O3 -L "/Users/$(USER)/.brew/opt/glfw/lib/"
+LIBMLX		= ./mlx42
 
-all:		${NAME}
+all:		libmlx ${NAME}
+
+libmlx:
+				@$(MAKE) -C $(LIBMLX)
 
 obj/%.o:	src/%.c
 				@mkdir -p $(dir $@)
@@ -22,6 +28,7 @@ clean:
 fclean:		clean
 				@${RM} ${NAME}
 				@${RM} test
+				@$(MAKE) -C $(LIBMLX) fclean
 				$(info ************  cub 3d ed Removed)
 
 re:			fclean all
@@ -31,7 +38,7 @@ raytest:		${RAY_TEST_OBJS}
 				./test
 
 ${NAME}:	${OBJS}
-				@${CC} $(OBJS) $(CFLAGS) -o $@
+				@${CC} $(OBJS) ${LIBS} $(CFLAGS) -o $@ ${LINKFLAGS}
 				$(info ************  cub 3d ed Ready!)
 
 .PHONY: all clean fclean re
