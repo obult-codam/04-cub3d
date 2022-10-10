@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/10 18:38:19 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/10 19:03:33 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ int	main(void)
 		return (0);
 
 	mlx_put_pixel(img, 0, 0, 0xFF0000FF);
+	// segf
+	// mlx_put_pixel(img, 266, 266, 0xFF0000FF);
 
+	// loop_hook is funciton per frame, so can it build the frame?
+	// I guess yes if I add a struct with my game info, mlx info and
 	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);

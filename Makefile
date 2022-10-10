@@ -41,4 +41,7 @@ ${NAME}:	${OBJS}
 				@${CC} $(OBJS) ${LIBS} $(CFLAGS) -o $@ ${LINKFLAGS}
 				$(info ************  cub 3d ed Ready!)
 
+run:		all
+				./${NAME}
+
 .PHONY: all clean fclean re

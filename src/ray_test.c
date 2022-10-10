@@ -44,6 +44,7 @@ void	test_max_dist_calc_float(char ** map)
 int	main(void)
 {
 	test_max_dist_calc((char *[]){"1111", "1001", "1001", "1111"});
+	printf("\n");
 	test_max_dist_calc_float((char *[]){"1111", "1001", "1001", "1111"});
 	return (0);
 }
