@@ -6,39 +6,38 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/10 19:03:33 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/11 14:12:14 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
-#include "ray.h"
+#include "cub.h"
 
-static void ft_hook(void* param)
-{
-	const mlx_t* mlx = param;
 
-	printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
-}
+// static void ft_hook(void* param)
+// {
+// 	const mlx_t* mlx = param;
+
+// 	printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
+// 	// 
+// }
 
 int	main(void)
 {
+	t_data	data;
+
+	data.angle = 0;
 	mlx_set_setting(MLX_MAXIMIZED, true);
-	mlx_t* mlx = mlx_init(256, 256, "windows", true);
-	if (!mlx)
-		return (0);
+	data.mlx = mlx_init(256, 256, "cub3d", true);
+	if (!data.mlx)
+		return (1);
 
-	mlx_image_t* img = mlx_new_image(mlx, 256, 256);
-	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
-		return (0);
+	data.img = mlx_new_image(data.mlx, 256, 256);
+	if (!data.img || (mlx_image_to_window(data.mlx, data.img, 0, 0) < 0))
+		return (2);
 
-	mlx_put_pixel(img, 0, 0, 0xFF0000FF);
-	// segf
-	// mlx_put_pixel(img, 266, 266, 0xFF0000FF);
-
-	// loop_hook is funciton per frame, so can it build the frame?
-	// I guess yes if I add a struct with my game info, mlx info and
-	mlx_loop_hook(mlx, ft_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_put_pixel(data.img, 0, 0, 0xFF0000FF);
+	mlx_loop_hook(data.mlx, frame_render, &data);
+	mlx_loop(data.mlx);
+	mlx_terminate(data.mlx);
 	return (0);
 }
