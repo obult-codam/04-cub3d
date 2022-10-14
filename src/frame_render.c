@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/11 20:09:17 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/13 16:12:50 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,12 @@
 
 uint32_t	get_texture_value(float x, float y, mlx_texture_t *tex)
 {
+	uint32_t	dx;
+	uint32_t	dy;
 
+	dx = (uint32_t)round_down(tex->width * x);
+	dy = (uint32_t)round_down(tex->height * y);
+	return ((uint23_t)tex->pixels[(dx + dy * tex->width)]);
 }
 
 void	draw_x_final(t_data *data, float distance, float hit, int pixel)
