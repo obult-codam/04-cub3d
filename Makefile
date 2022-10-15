@@ -6,7 +6,7 @@ RAY_TEST_OBJS	= $(addsuffix .o, $(addprefix obj/, ray_test ray ray_utils))
 CC			= gcc
 RM			= rm -f
 HEADER		= -I includes/ -I mlx42/include/MLX42/
-CFLAGS		= -Wall -Wextra -Werror #-fsanitize=address -g
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -g
 LIBS		= $(LIBMLX)/libmlx42.a
 LINKFLAGS	= -lglfw -ldl -lm -O3 -L "/Users/$(USER)/.brew/opt/glfw/lib/"
 LIBMLX		= ./mlx42

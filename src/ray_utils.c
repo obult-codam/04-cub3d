@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 13:53:25 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/10 14:01:43 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/14 20:02:01 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ float	positivef(float f)
  */
 int	round_down(float z)
 {
-	float	trash;
 	float	tmp;
 
-	trash = modff(z, &tmp);
-	(void)trash;
+	modff(z, &tmp);
 	return ((int)tmp);
 }
 
@@ -43,9 +41,8 @@ int	round_down(float z)
 float	calc_distance_y(float z, float angle)
 {
 	float	tmp;
-	float	trash;
 
-	tmp = modff(z, &trash);
+	tmp = modff(z, &tmp);
 	if (angle > 0.5 * PI && angle < 1.5 * PI)
 	{
 		if (!tmp)
@@ -58,9 +55,8 @@ float	calc_distance_y(float z, float angle)
 float	calc_distance_x(float z, float angle)
 {
 	float	tmp;
-	float	trash;
 
-	tmp = modff(z, &trash);
+	tmp = modff(z, &tmp);
 	if (angle > 0 && angle < PI)
 		return (1 - tmp);
 	if (!tmp)
