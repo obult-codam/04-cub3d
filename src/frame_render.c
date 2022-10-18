@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/18 16:56:53 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/18 18:18:10 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ uint32_t	get_texture_value(float x, float y, mlx_texture_t *tex)	// this could b
 	pixels = (uint32_t *)tex->pixels;
 	dx = (uint32_t)round_down(tex->width * x);
 	dy = (uint32_t)round_down(tex->height * y);
+	if (dx > tex->width - 1 || dy > tex->height - 1)
+		return (0);
 	result = pixels[(dx + dy * tex->width)];
 	end = ((result>>24)&0xff) |
 		((result<<8)&0xff0000) |
@@ -33,7 +35,7 @@ uint32_t	get_texture_value(float x, float y, mlx_texture_t *tex)	// this could b
 	return (end);
 }
 
-void	draw_final(t_data *data, float distance, float hit, int pixel)
+void	draw_final(t_data *data, float distance, float hit, int pixel, float angle)
 {
 	int	i;
 	int	wall_top;
@@ -41,7 +43,9 @@ void	draw_final(t_data *data, float distance, float hit, int pixel)
 	int	wall_size;
 
 	i = 0;
-	wall_size = data->mlx->height / distance;	// is this correct?, this needs to be changed with a modifier based on where it is on the screen
+	distance = distance * positivef(cosf(angle - data->angle));	//causes segfault, should change the fisheye
+	(void)angle;
+	wall_size = data->mlx->height / distance;	//is this correct?
 	wall_top = (data->mlx->height - wall_size) / 2;
 	wall_bot = data->mlx->height - wall_top;
 	while (i < data->mlx->height)
@@ -52,8 +56,8 @@ void	draw_final(t_data *data, float distance, float hit, int pixel)
 			mlx_put_pixel(data->img, pixel, i, data->floor);
 		else
 		{
-			uint32_t tmp = get_texture_value(hit, (float)wall_size / (float)data->mlx->height * (float)i / (float)data->mlx->height, data->textures[data->side]);
-			
+			float		y = (float)(i - wall_top) / (float)wall_size;
+			uint32_t tmp = get_texture_value(hit, y, data->textures[data->side]);
 			mlx_put_pixel(data->img, pixel, (float)i, tmp);
 		}
 		i++;
@@ -75,7 +79,7 @@ void	draw_x_hit(t_data *data, float angle, float distance, int pixel)
 	}
 	else
 		data->side = NORTH;
-	draw_final(data, distance, hit, pixel);
+	draw_final(data, distance, hit, pixel, angle);
 }
 
 void	draw_y_hit(t_data *data, float angle, float distance, int pixel)
@@ -87,12 +91,14 @@ void	draw_y_hit(t_data *data, float angle, float distance, int pixel)
 		hit = 1 + hit;
 	if (angle > 0 && angle < PI)
 	{
-		hit = 1 - hit;	// why do I reverse this??? (I think it is needed for tyhe west wall but could be for the east wall..)
 		data->side = WEST;
 	}
 	else
+	{
+		hit = 1 - hit;	// why do I reverse this??? (I think it is needed for tyhe west wall but could be for the east wall..)
 		data->side = EAST;
-	draw_final(data, distance, hit, pixel);
+	}
+	draw_final(data, distance, hit, pixel, angle);
 }
 
 void	draw_vertical(t_data *data, int pixel)

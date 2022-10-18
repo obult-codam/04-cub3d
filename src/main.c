@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/18 13:53:43 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/18 17:43:41 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(void)
 	data.textures[1] = data.textures[0];
 	data.textures[2] = data.textures[0];
 	data.textures[3] = data.textures[0];
-	data.angle = 1;
+	data.angle = 0.8;
 	data.map = testmap;
 	data.x_max = 3;
 	data.y_max = 3;
