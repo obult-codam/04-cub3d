@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/18 18:21:30 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/18 19:50:28 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	draw_final(t_data *data, float distance, float hit, int pixel, float angle)
 	int	wall_size;
 
 	i = 0;
-	distance = distance * positivef(cosf(angle - data->angle));	//causes segfault, should change the fisheye
+	distance = distance * positivef(cosf(angle - data->angle));
 	(void)angle;
-	wall_size = data->mlx->height / distance;	//is this correct?
+	wall_size = data->mlx->height / distance;
 	wall_top = (data->mlx->height - wall_size) / 2;
 	wall_bot = data->mlx->height - wall_top;
 	while (i < data->mlx->height)
@@ -95,7 +95,7 @@ void	draw_y_hit(t_data *data, float angle, float distance, int pixel)
 	}
 	else
 	{
-		hit = 1 - hit;	// why do I reverse this??? (I think it is needed for tyhe west wall but could be for the east wall..)
+		hit = 1 - hit;
 		data->side = EAST;
 	}
 	draw_final(data, distance, hit, pixel, angle);
