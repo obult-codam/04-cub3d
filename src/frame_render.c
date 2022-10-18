@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/18 18:18:10 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/18 18:21:30 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ uint32_t	get_texture_value(float x, float y, mlx_texture_t *tex)	// this could b
 	pixels = (uint32_t *)tex->pixels;
 	dx = (uint32_t)round_down(tex->width * x);
 	dy = (uint32_t)round_down(tex->height * y);
-	if (dx > tex->width - 1 || dy > tex->height - 1)
+	if (dx >= tex->width || dy >= tex->height)
 		return (0);
 	result = pixels[(dx + dy * tex->width)];
 	end = ((result>>24)&0xff) |
