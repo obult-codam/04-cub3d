@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:13:29 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/11 18:31:35 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/17 14:53:59 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct	s_data
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_side			side;
-	mlx_texture_t	*textures[];
+	mlx_texture_t	*textures[4];
 }				t_data;
 
 void	frame_render(void *param);

@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/15 14:50:19 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/18 16:56:53 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,19 @@ uint32_t	get_texture_value(float x, float y, mlx_texture_t *tex)	// this could b
 {
 	uint32_t	dx;
 	uint32_t	dy;
+	uint32_t	result;
+	uint32_t	end;
+	uint32_t	*pixels;
 
+	pixels = (uint32_t *)tex->pixels;
 	dx = (uint32_t)round_down(tex->width * x);
 	dy = (uint32_t)round_down(tex->height * y);
-	return ((uint32_t)tex->pixels[(dx + dy * tex->width)]);
+	result = pixels[(dx + dy * tex->width)];
+	end = ((result>>24)&0xff) |
+		((result<<8)&0xff0000) |
+		((result>>8)&0xff00) |
+		((result<<24)&0xff000000);
+	return (end);
 }
 
 void	draw_final(t_data *data, float distance, float hit, int pixel)
@@ -42,7 +51,11 @@ void	draw_final(t_data *data, float distance, float hit, int pixel)
 		else if (i > wall_bot)
 			mlx_put_pixel(data->img, pixel, i, data->floor);
 		else
-			mlx_put_pixel(data->img, pixel, i, get_texture_value(hit, (float)(wall_bot - wall_top) / (float)(i - wall_top), data->textures[data->side]));	// needs to get color value
+		{
+			uint32_t tmp = get_texture_value(hit, (float)wall_size / (float)data->mlx->height * (float)i / (float)data->mlx->height, data->textures[data->side]);
+			
+			mlx_put_pixel(data->img, pixel, (float)i, tmp);
+		}
 		i++;
 	}
 }

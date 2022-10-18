@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/11 14:12:14 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/18 13:53:43 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,20 @@
 int	main(void)
 {
 	t_data	data;
+	char	**testmap = (char *[]){"1111", "1001", "1001", "1111"};
 
-	data.angle = 0;
+	data.textures[0] = mlx_load_png("./Cetusfinal.png");
+	data.textures[1] = data.textures[0];
+	data.textures[2] = data.textures[0];
+	data.textures[3] = data.textures[0];
+	data.angle = 1;
+	data.map = testmap;
+	data.x_max = 3;
+	data.y_max = 3;
+	data.player.x = 2;
+	data.player.y = 2;
+	data.ceiling = 0x0ffaf2ff;
+	data.floor = 0xfaa00fff;
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	data.mlx = mlx_init(256, 256, "cub3d", true);
 	if (!data.mlx)
