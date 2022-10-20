@@ -6,13 +6,14 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/18 19:50:28 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/20 14:24:50 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include "ray.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 uint32_t	get_texture_value(float x, float y, mlx_texture_t *tex)	// this could be a util
 {
@@ -45,7 +46,7 @@ void	draw_final(t_data *data, float distance, float hit, int pixel, float angle)
 	i = 0;
 	distance = distance * positivef(cosf(angle - data->angle));
 	(void)angle;
-	wall_size = data->mlx->height / distance;
+	wall_size = data->mlx->height / positivef(distance);
 	wall_top = (data->mlx->height - wall_size) / 2;
 	wall_bot = data->mlx->height - wall_top;
 	while (i < data->mlx->height)
@@ -69,7 +70,7 @@ void	draw_x_hit(t_data *data, float angle, float distance, int pixel)
 	float	hit;
 	float	integral;
 
-	hit = modff(tan(angle) * distance, &integral);
+	hit = modff(tan(angle) * distance, &integral);	// plus x location??
 	if (hit < 0)
 		hit = 1 + hit;
 	if (!((angle > -0.5 * PI && angle < 1.5 * PI) || angle > PI * 2.5))
@@ -87,6 +88,7 @@ void	draw_y_hit(t_data *data, float angle, float distance, int pixel)
 	float	hit;
 
 	hit = modff(tan(angle - PI * 0.5) * distance, &hit);
+	printf("hit: %f\n", hit);
 	if (hit < 0)
 		hit = 1 + hit;
 	if (angle > 0 && angle < PI)
@@ -114,6 +116,17 @@ void	draw_vertical(t_data *data, int pixel)
 		draw_y_hit(data, angle, distance, pixel);
 }
 
+void	resize_action(t_data *data)
+{
+	if (data->mlx->width == data->width && data->mlx->height == data->height)
+		return ;
+	if (!mlx_resize_image(data->img, data->mlx->width, data->mlx->height))
+		exit(0);
+	data->width = data->mlx->width;
+	data->height = data->mlx->height;
+	printf("action\n");
+}
+
 void	frame_render(void *param)
 {
 	t_data	*data;
@@ -121,16 +134,11 @@ void	frame_render(void *param)
 
 	data = (t_data *)param;
 	i = 0;
-	printf("WIDTH: %d | HEIGHT: %d\n", data->mlx->width, data->mlx->height);
-	data->img = mlx_new_image(data->mlx, data->mlx->width, data->mlx->height);	// I shoud not create this many new images
-	if (!data->img)
-		return ;
+	resize_action(data);
 	while (i < data->mlx->width)
 	{
 		draw_vertical(data, i);
 		i++;
 	}
-	if (mlx_image_to_window(data->mlx, data->img, 0, 0) < 0)
-		return ;
 }
 
