@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/20 17:01:43 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/20 17:06:07 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	draw_final(t_data *data, float distance, float hit, int pixel, float angle)
 	int	wall_size;
 
 	i = 0;
-	// distance = distance * positivef(cosf(angle - data->angle));
+	distance = distance * positivef(cosf(angle - data->angle));
 	(void)angle;
 	wall_size = data->mlx->height / positivef(distance);
 	wall_top = (data->mlx->height - wall_size) / 2;
@@ -111,7 +111,7 @@ void	draw_vertical(t_data *data, int pixel)
 	angle = atanf(((float)pixel - (data->mlx->width / 2)) / (data->mlx->width / 2)) + data->angle;	// view
 	distance = max_dist(data, angle);
 
-	distance = distance * positivef(cosf(angle - data->angle));
+	// distance = distance * positivef(cosf(angle - data->angle));
 	if (data->sign == 'x')
 		draw_x_hit(data, angle, distance, pixel);
 	else

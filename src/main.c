@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/20 17:01:57 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/20 17:04:29 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	the_simulation(t_data *data)
 int	main(void)
 {
 	t_data	data;
-	char	**testmap = (char *[]){"111", "101", "111", "10001", "11111"};
+	char	**testmap = (char *[]){"1111", "10001", "10001", "10001", "11111"};
 
 	data.textures[0] = mlx_load_png("./Cetusfinal.png");
 	data.textures[1] = mlx_load_png("./P.png");
@@ -70,8 +70,8 @@ int	main(void)
 	data.textures[3] = data.textures[1];
 	data.angle = 0;
 	data.map = testmap;
-	data.x_max = 2;
-	data.y_max = 2;
+	data.x_max = 4;
+	data.y_max = 4;
 	data.player.x = 1.5;
 	data.player.y = 1.5;
 	data.ceiling = 0x0ffaf2ff;
