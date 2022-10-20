@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/20 14:24:50 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/20 17:01:43 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	draw_final(t_data *data, float distance, float hit, int pixel, float angle)
 	int	wall_size;
 
 	i = 0;
-	distance = distance * positivef(cosf(angle - data->angle));
+	// distance = distance * positivef(cosf(angle - data->angle));
 	(void)angle;
 	wall_size = data->mlx->height / positivef(distance);
 	wall_top = (data->mlx->height - wall_size) / 2;
@@ -70,10 +70,11 @@ void	draw_x_hit(t_data *data, float angle, float distance, int pixel)
 	float	hit;
 	float	integral;
 
-	hit = modff(tan(angle) * distance, &integral);	// plus x location??
+	hit = modff(sin(angle) * distance + data->player.x, &integral);	// plus x location??
+	// printf("hit: %f\t", hit);
 	if (hit < 0)
 		hit = 1 + hit;
-	if (!((angle > -0.5 * PI && angle < 1.5 * PI) || angle > PI * 2.5))
+	if (!((angle > -0.5 * PI && angle < 1.5 * PI) || angle > PI * 2.5))	// going to give issues after a couple rotations
 	{
 		hit = 1 - hit;
 		data->side = SOUTH;
@@ -87,8 +88,7 @@ void	draw_y_hit(t_data *data, float angle, float distance, int pixel)
 {
 	float	hit;
 
-	hit = modff(tan(angle - PI * 0.5) * distance, &hit);
-	printf("hit: %f\n", hit);
+	hit = modff(sin(angle - PI * 0.5) * distance + data->player.y, &hit);
 	if (hit < 0)
 		hit = 1 + hit;
 	if (angle > 0 && angle < PI)
@@ -108,8 +108,10 @@ void	draw_vertical(t_data *data, int pixel)
 	float	angle;
 	float	distance;
 
-	angle = atanf(((float)pixel - (data->mlx->width / 2)) / (data->mlx->width / 2)) + data->angle;
+	angle = atanf(((float)pixel - (data->mlx->width / 2)) / (data->mlx->width / 2)) + data->angle;	// view
 	distance = max_dist(data, angle);
+
+	distance = distance * positivef(cosf(angle - data->angle));
 	if (data->sign == 'x')
 		draw_x_hit(data, angle, distance, pixel);
 	else
@@ -124,7 +126,7 @@ void	resize_action(t_data *data)
 		exit(0);
 	data->width = data->mlx->width;
 	data->height = data->mlx->height;
-	printf("action\n");
+	printf("resize action\n");
 }
 
 void	frame_render(void *param)

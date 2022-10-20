@@ -6,12 +6,22 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/20 14:02:42 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/20 17:01:57 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 #include <stdlib.h>
+
+// void	move_forward(t_data *data)
+// {
+// 	data->player.x += tan(data->angle) * 0.1; 
+// }
+
+// void	move_back(t_data *data)
+// {
+	
+// }
 
 void	keyhook(mlx_key_data_t keydata, void *param)
 {
@@ -22,12 +32,16 @@ void	keyhook(mlx_key_data_t keydata, void *param)
 		data->angle = data->angle + 0.05;
 	if (keydata.key == MLX_KEY_A)
 		data->angle = data->angle - 0.05;
+	// if (keydata.key == MLX_KEY_W)
+	// 	move_forward(data);
+	// if (keydata.key == MLX_KEY_D)
+	// 	move_back(data);
 }
 
 int	the_simulation(t_data *data)
 {
 	// mlx_set_setting(MLX_MAXIMIZED, true);
-	data->mlx = mlx_init(512, 256, "cub3d", true);
+	data->mlx = mlx_init(1024, 512, "cub3d", true);
 	if (!data->mlx)
 		return (1);
 
@@ -48,17 +62,17 @@ int	the_simulation(t_data *data)
 int	main(void)
 {
 	t_data	data;
-	char	**testmap = (char *[]){"1111", "1001", "1001", "1111"};
+	char	**testmap = (char *[]){"111", "101", "111", "10001", "11111"};
 
 	data.textures[0] = mlx_load_png("./Cetusfinal.png");
-	data.textures[1] = data.textures[0];
+	data.textures[1] = mlx_load_png("./P.png");
 	data.textures[2] = data.textures[0];
-	data.textures[3] = data.textures[0];
+	data.textures[3] = data.textures[1];
 	data.angle = 0;
 	data.map = testmap;
-	data.x_max = 3;
-	data.y_max = 3;
-	data.player.x = 2;
+	data.x_max = 2;
+	data.y_max = 2;
+	data.player.x = 1.5;
 	data.player.y = 1.5;
 	data.ceiling = 0x0ffaf2ff;
 	data.floor = 0xfaa00fff;
