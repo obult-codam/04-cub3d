@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/21 18:37:11 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 18:52:22 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	draw_final(t_data *data, float distance, float hit, int pixel, float angle)
 	wall_bot = data->mlx->height - wall_top;
 	while (i < data->mlx->height)
 	{
-		if (i < wall_top)
+		if (i <= wall_top)
 			mlx_put_pixel(data->img, pixel, i, data->ceiling);
-		else if (i > wall_bot)
+		else if (i >= wall_bot)
 			mlx_put_pixel(data->img, pixel, i, data->floor);
 		else
 		{
@@ -70,7 +70,7 @@ void	draw_x_hit(t_data *data, float angle, float distance, int pixel)
 	float	hit;
 	float	integral;
 
-	hit = modff(sin(angle) * distance + data->player.x, &integral);	// plus x location??
+	hit = modff(sin(angle) * distance + data->player.x, &integral);
 	if (hit < 0)
 		hit = 1 + hit;
 	if (angle > 1.5 * PI || angle < 0.5 * PI)
@@ -90,7 +90,7 @@ void	draw_y_hit(t_data *data, float angle, float distance, int pixel)
 	hit = modff(sin(angle - PI * 0.5) * distance + data->player.y, &hit);	// this has to be minus pl.y aparently..
 	if (hit < 0)
 		hit = 1 + hit;
-	if (angle > 0 && angle < PI)
+	if (!is_east(angle))
 	{
 		data->side = WEST;
 	}
