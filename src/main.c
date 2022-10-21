@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/21 16:10:15 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 21:15:14 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,6 @@
 	
 // }
 
-void	keyhook(mlx_key_data_t keydata, void *param)
-{
-	t_data *data;
-
-	data = (t_data *)param;
-	if (keydata.key == MLX_KEY_D)
-		data->angle = data->angle + 0.05;
-	if (keydata.key == MLX_KEY_A)
-		data->angle = data->angle - 0.05;
-	// if (keydata.key == MLX_KEY_W)
-	// 	move_forward(data);
-	// if (keydata.key == MLX_KEY_D)
-	// 	move_back(data);
-}
-
 int	the_simulation(t_data *data)
 {
 	// mlx_set_setting(MLX_MAXIMIZED, true);
@@ -51,7 +36,7 @@ int	the_simulation(t_data *data)
 
 	// mlx_resize_hook(data->mlx, &resize_hook, data);
 
-	mlx_key_hook(data->mlx, &keyhook, data);
+	// mlx_key_hook(data->mlx, &keyhook, data);
 	mlx_loop_hook(data->mlx, frame_render, data);
 
 	mlx_loop(data->mlx);

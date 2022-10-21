@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/21 18:39:45 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 21:59:53 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,6 @@ float	max_y_dist(t_data data, float angle, float x, float y)
 }
 
 /*
- *	When the angle is zero there is no triangle to make so the distance could not be calculated.
- *	This function goes straight up to find the distance to a wall
- */
-float	straight_up_distance(t_data *data)
-{
-	int	i;
-	float	trash;
-
-	i = 0;
-	data->sign = 'x';
-	while (data->map[round_down(data->player.y)][round_down(data->player.x) + i] == '0')
-		i++;
-	return ((float)i - modff(data->player.x, &trash));
-
-}
-
-/*
  *	This function needs to be called to get the distance to the first wall
  *	Also the sign char in struct will be set to 'x' or 'y' depending on where it hit
  */
@@ -104,7 +87,7 @@ float	max_dist(t_data *data, float angle)
 	float	y_total;
 
 	if (angle == 0)
-		return (straight_up_distance(data));
+		angle = 0.001;
 	x_total = max_x_dist(*data, angle, data->player.x, data->player.y) / sinf(angle);
 	y_total = max_y_dist(*data, angle, data->player.x, data->player.y) / sinf(angle - PI * 0.5);
 	if (x_total == ERROR && y_total == ERROR)

@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/21 18:52:22 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 21:51:19 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void	draw_x_hit(t_data *data, float angle, float distance, int pixel)
 	float	hit;
 	float	integral;
 
-	hit = modff(sin(angle) * distance + data->player.x, &integral);
+	hit = modff(sinf(angle) * distance + data->player.x, &integral);
 	if (hit < 0)
 		hit = 1 + hit;
-	if (angle > 1.5 * PI || angle < 0.5 * PI)
+	if (is_north(angle))
 		data->side = NORTH;
 	else
 	{
@@ -87,7 +87,7 @@ void	draw_y_hit(t_data *data, float angle, float distance, int pixel)
 {
 	float	hit;
 
-	hit = modff(sin(angle - PI * 0.5) * distance + data->player.y, &hit);	// this has to be minus pl.y aparently..
+	hit = modff(sinf(angle - PI * 0.5) * distance + data->player.y, &hit);
 	if (hit < 0)
 		hit = 1 + hit;
 	if (!is_east(angle))
@@ -107,7 +107,7 @@ void	draw_vertical(t_data *data, int pixel)
 	float	angle;
 	float	distance;
 
-	angle = atanf(((float)pixel - (data->mlx->width / 2)) / (data->mlx->width / 2)) + data->angle;	// view
+	angle = atanf(((float)pixel - (data->mlx->width / 2)) / (data->mlx->width / 2)) + data->angle;
 	distance = max_dist(data, angle);
 	if (data->sign == 'x')
 		draw_x_hit(data, angle, distance, pixel);
@@ -133,6 +133,7 @@ void	frame_render(void *param)
 
 	data = (t_data *)param;
 	i = 0;
+	key_check(data);
 	data->angle = normalizePi(data->angle);
 	resize_action(data);
 	while (i < data->mlx->width)

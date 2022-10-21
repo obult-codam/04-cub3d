@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:13:29 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/20 13:34:35 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 21:16:21 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,8 @@ typedef struct	s_data
 }				t_data;
 
 void	frame_render(void *param);
+
+// movement
+void	key_check(t_data *data);
 
 #endif
