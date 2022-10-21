@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/20 17:04:29 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 16:10:15 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	main(void)
 	data.map = testmap;
 	data.x_max = 4;
 	data.y_max = 4;
-	data.player.x = 1.5;
-	data.player.y = 1.5;
+	data.player.x = 2.1;
+	data.player.y = 2.1;
 	data.ceiling = 0x0ffaf2ff;
 	data.floor = 0xfaa00fff;
 

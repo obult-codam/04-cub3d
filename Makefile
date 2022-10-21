@@ -1,6 +1,6 @@
 
 NAME		= cub3d
-OBJ			= main ray ray_utils frame_render
+OBJ			= main ray ray_utils frame_render direction_utils
 OBJS		= $(addsuffix .o, $(addprefix obj/, ${OBJ}))
 RAY_TEST_OBJS	= $(addsuffix .o, $(addprefix obj/, ray_test ray ray_utils))
 CC			= gcc

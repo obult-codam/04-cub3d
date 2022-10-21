@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:19:43 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/20 17:06:07 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 18:37:11 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,15 @@ void	draw_x_hit(t_data *data, float angle, float distance, int pixel)
 	float	integral;
 
 	hit = modff(sin(angle) * distance + data->player.x, &integral);	// plus x location??
-	// printf("hit: %f\t", hit);
 	if (hit < 0)
 		hit = 1 + hit;
-	if (!((angle > -0.5 * PI && angle < 1.5 * PI) || angle > PI * 2.5))	// going to give issues after a couple rotations
+	if (angle > 1.5 * PI || angle < 0.5 * PI)
+		data->side = NORTH;
+	else
 	{
 		hit = 1 - hit;
 		data->side = SOUTH;
 	}
-	else
-		data->side = NORTH;
 	draw_final(data, distance, hit, pixel, angle);
 }
 
@@ -88,7 +87,7 @@ void	draw_y_hit(t_data *data, float angle, float distance, int pixel)
 {
 	float	hit;
 
-	hit = modff(sin(angle - PI * 0.5) * distance + data->player.y, &hit);
+	hit = modff(sin(angle - PI * 0.5) * distance + data->player.y, &hit);	// this has to be minus pl.y aparently..
 	if (hit < 0)
 		hit = 1 + hit;
 	if (angle > 0 && angle < PI)
@@ -110,8 +109,6 @@ void	draw_vertical(t_data *data, int pixel)
 
 	angle = atanf(((float)pixel - (data->mlx->width / 2)) / (data->mlx->width / 2)) + data->angle;	// view
 	distance = max_dist(data, angle);
-
-	// distance = distance * positivef(cosf(angle - data->angle));
 	if (data->sign == 'x')
 		draw_x_hit(data, angle, distance, pixel);
 	else
@@ -136,6 +133,7 @@ void	frame_render(void *param)
 
 	data = (t_data *)param;
 	i = 0;
+	data->angle = normalizePi(data->angle);
 	resize_action(data);
 	while (i < data->mlx->width)
 	{

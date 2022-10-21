@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/10 14:27:23 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 18:39:45 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ float	max_x_dist(t_data data, float angle, float x, float y)
 		return (ERROR);
 	if (round_down(y_dist + y) > data.y_max || round_down(y_dist + y) < 0)
 		return (ERROR);
-	if (angle < 0.5 * PI || angle > 1.5 * PI)
+	if (is_north(angle))
 		if (data.map[round_down(y + y_dist)][round_down(x + x_dist)] != '0')
 			return (x_dist);
 	if (round_down(y_dist + y) < 1)
@@ -40,6 +40,11 @@ float	max_x_dist(t_data data, float angle, float x, float y)
 		return (ERROR);
 	return (result + x_dist);
 }
+
+// float	new_max_y_dist(t_data data, float angle, float x, float y)
+// {
+// 	if
+// }
 
 /*
  *	This Function calculates the distance untill a ray with an angle against the north
@@ -54,12 +59,12 @@ float	max_y_dist(t_data data, float angle, float x, float y)
 
 	anglePI = angle - (PI * 0.5);
 	x_dist = calc_distance_x(x, angle);
-	y_dist = tanf(anglePI) * x_dist;
+	y_dist = tanf(anglePI) * x_dist * -1;
 	if (round_down(y_dist + y) > data.y_max || round_down(y_dist + y) < 0)
 		return (ERROR);
 	if (round_down(x_dist + x) > data.x_max || round_down(x_dist + x) < 0)
 		return (ERROR);
-	if (angle > 0 && angle < PI)
+	if (is_east(angle))
 		if (data.map[round_down(y + y_dist)][round_down(x + x_dist)] != '0')
 			return (y_dist);
 	if (round_down(x_dist + x) < 1)
@@ -82,7 +87,7 @@ float	straight_up_distance(t_data *data)
 	float	trash;
 
 	i = 0;
-	data->sign = 'y';
+	data->sign = 'x';
 	while (data->map[round_down(data->player.y)][round_down(data->player.x) + i] == '0')
 		i++;
 	return ((float)i - modff(data->player.x, &trash));

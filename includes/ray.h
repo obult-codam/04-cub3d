@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:31:33 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/11 12:15:19 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 18:27:42 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,10 @@ int		round_down(float z);
 float	positivef(float f);
 float	calc_distance_y(float z, float angle);
 float	calc_distance_x(float z, float angle);
+float	normalizePi(float f);
+
+// Direction Utils
+bool	is_north(float angle);
+bool	is_east(float angle);
 
 #endif

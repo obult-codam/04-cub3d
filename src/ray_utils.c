@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 13:53:25 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/14 20:02:01 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 18:31:32 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@ float	positivef(float f)
 {
 	if (f < 0)
 		return (f * -1);
+	return (f);
+}
+
+float	normalizePi(float f)
+{
+	while (f < 0 || f > 2 * PI)
+	{
+		if (f < 0)
+			f += 2 * PI;
+		else
+			f -= 2 * PI;
+	}
 	return (f);
 }
 
@@ -43,7 +55,7 @@ float	calc_distance_y(float z, float angle)
 	float	tmp;
 
 	tmp = modff(z, &tmp);
-	if (angle > 0.5 * PI && angle < 1.5 * PI)
+	if (!is_north(angle))
 	{
 		if (!tmp)
 			return (-1);
@@ -57,7 +69,7 @@ float	calc_distance_x(float z, float angle)
 	float	tmp;
 
 	tmp = modff(z, &tmp);
-	if (angle > 0 && angle < PI)
+	if (is_east(angle))
 		return (1 - tmp);
 	if (!tmp)
 		return (-1);

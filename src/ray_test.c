@@ -41,10 +41,31 @@ void	test_max_dist_calc_float(char ** map)
 	}
 }
 
+void	test_max_dist_calc_float_plus(char ** map)
+{
+	t_data data;
+	data.map = map;
+	data.x_max = 4;
+	data.y_max = 4;
+	data.sign = 'o';
+
+	data.player.x = 1.2;
+	data.player.y = 1.2;
+	for (int i = 0; i < 18 * 4; i++)
+	{
+		if (i % 18 == 0)
+			printf("========\n");
+		printf("max dist (px, py) %i : %f", i, max_dist(&data, PI / 36 * 4));
+		printf(", s=%c\n", data.sign);
+	}
+}
+
 int	main(void)
 {
-	test_max_dist_calc((char *[]){"1111", "1001", "1001", "1111"});
-	printf("\n");
-	test_max_dist_calc_float((char *[]){"1111", "1001", "1001", "1111"});
+	// test_max_dist_calc((char *[]){"1111", "1001", "1001", "1111"});
+	// printf("\n");
+	// test_max_dist_calc_float((char *[]){"1111", "1001", "1001", "1111"});
+
+	test_max_dist_calc_float_plus((char *[]){"11111", "10001", "10001", "10001", "11111"});
 	return (0);
 }
