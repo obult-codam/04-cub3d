@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 13:53:25 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/21 18:57:36 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/22 13:29:39 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ float	positivef(float f)
 /*
  *	it normalizes to a value between 0 and 2 PI
  */
-float	normalizePi(float f)
+float	normalize_pi(float f)
 {
 	while (f < 0 || f > 2 * PI)
 	{

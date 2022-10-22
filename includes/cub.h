@@ -6,14 +6,14 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:13:29 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/21 21:16:21 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/22 13:14:13 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
 
-#include "MLX42.h"
+# include "MLX42.h"
 
 typedef enum {
 	NORTH,
@@ -47,9 +47,15 @@ typedef struct	s_data
 	int32_t		height;
 }				t_data;
 
+/*
+ *	Renders exactly one frame.
+ *	Starts by checking if the player has moved or the window has been resized.
+ */
 void	frame_render(void *param);
 
-// movement
+/*
+ *	This function checks keypresses and updates the data acordingly.
+ */
 void	key_check(t_data *data);
 
 #endif

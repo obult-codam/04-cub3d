@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/28 17:25:47 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/21 21:59:53 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/21 22:05:35 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ float	max_x_dist(t_data data, float angle, float x, float y)
 		return (ERROR);
 	return (result + x_dist);
 }
-
-// float	new_max_y_dist(t_data data, float angle, float x, float y)
-// {
-// 	if
-// }
 
 /*
  *	This Function calculates the distance untill a ray with an angle against the north
@@ -100,3 +95,7 @@ float	max_dist(t_data *data, float angle)
 	data->sign = 'y';
 	return (y_total);
 }
+
+/*
+ *	I hope to never have to touch this file again!
+ */
