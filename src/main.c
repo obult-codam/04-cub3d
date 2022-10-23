@@ -3,64 +3,34 @@
 /*                                                        ::::::::            */
 /*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: obult <obult@student.codam.nl>               +#+                     */
+/*   By: ivelling <izaakvellinga@gmail.com>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/21 21:15:14 by obult         ########   odam.nl         */
+/*   Created: 2022/09/30 17:24:14 by ivelling      #+#    #+#                 */
+/*   Updated: 2022/10/23 16:58:50 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
+#include "libft.h"
+#include "parsing.h"
 #include "cub.h"
-#include <stdlib.h>
 
-// void	move_forward(t_data *data)
-// {
-// 	data->player.x += tan(data->angle) * 0.1; 
-// }
-
-// void	move_back(t_data *data)
-// {
-	
-// }
-
-int	the_simulation(t_data *data)
+int	main(int argc, char **argv)
 {
-	// mlx_set_setting(MLX_MAXIMIZED, true);
-	data->mlx = mlx_init(1024, 512, "cub3d", true);
-	if (!data->mlx)
-		return (1);
+	int				fd;
+	t_map_struct	ms;
 
-	data->img = mlx_new_image(data->mlx, 256, 256);
-	if (!data->img || (mlx_image_to_window(data->mlx, data->img, 0, 0) < 0))
-		return (2);
-
-	// mlx_resize_hook(data->mlx, &resize_hook, data);
-
-	// mlx_key_hook(data->mlx, &keyhook, data);
-	mlx_loop_hook(data->mlx, frame_render, data);
-
-	mlx_loop(data->mlx);
-	mlx_terminate(data->mlx);
-	return (0);
-}
-
-int	main(void)
-{
-	t_data	data;
-	char	**testmap = (char *[]){"1111", "10001", "10001", "10001", "11111"};
-
-	data.textures[0] = mlx_load_png("./Cetusfinal.png");
-	data.textures[1] = mlx_load_png("./P.png");
-	data.textures[2] = data.textures[0];
-	data.textures[3] = data.textures[1];
-	data.angle = 0;
-	data.map = testmap;
-	data.x_max = 4;
-	data.y_max = 4;
-	data.player.x = 2.1;
-	data.player.y = 2.1;
-	data.ceiling = 0x0ffaf2ff;
-	data.floor = 0xfaa00fff;
-
-	the_simulation(&data);
+	if (argc != 2)
+		error_and_msg("Input misconfiguration", 2);
+	if (extention_check(argv[1], ".cub"))
+		error_and_msg("Wrong file extension", 2);
+	fd = open(argv[1], O_RDONLY);
+	if (!fd || fd < 0)
+		error_and_msg("Empty or No File", 2);
+	ft_memset(&ms, 0, sizeof(t_map_struct));
+	file_parser(&ms, fd);
+	print_2d_array(ms.config);
+	init_textures(&ms);
+	ms.map[ms.height - 1] = NULL;
+	to_tomato_factory(ms);
 }

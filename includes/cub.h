@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:13:29 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/22 13:14:13 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/23 14:08:08 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB_H
 
 # include "MLX42.h"
+# include "parsing.h"
 
 typedef enum {
 	NORTH,
@@ -40,12 +41,19 @@ typedef struct	s_data
 	t_player	player;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
-	t_side			side;
 	mlx_texture_t	*textures[4];
-	bool			resize;
+	bool			resize;	// may not be needed (proably not needed)
+	t_side			side;
 	int32_t		width;
 	int32_t		height;
 }				t_data;
+
+/*
+ *	Turns a t_map_struct into a t_data.
+ *	Starts the game if no mlx_errors occur.
+ *	Returns a positive integer upon error and zero upon succes.
+ */
+int	to_tomato_factory(t_map_struct ref);
 
 /*
  *	Renders exactly one frame.
