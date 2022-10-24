@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/21 21:15:25 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/23 17:15:35 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/24 15:56:31 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,6 @@ void	key_check(t_data *data)
 		move_left(data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
 		move_right(data);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		exit(0);
 }
