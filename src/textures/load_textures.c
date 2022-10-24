@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/20 16:14:35 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/23 14:54:12 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/24 16:24:55 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static	unsigned int	set_color(char *str)
 	return (arr[0] << 24 | arr[1] << 16 | arr[2] << 8 | 0xff);
 }
 
-
 static	char	*skip_spaces(char *str)
 {
 	char	*temp;
@@ -112,6 +111,7 @@ void	init_textures(t_map_struct *ms)
 		set_texture(ms->config[i], ms);
 		i++;
 	}
+	i = 0;
 	while (i < 4)
 	{	
 		if (!ms->textures[i])

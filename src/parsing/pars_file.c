@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/03 19:22:36 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/20 19:37:01 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/24 16:23:04 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,29 @@
 #include "libft.h"
 #include "utils.h"
 
-void	check_map_values(char c, t_map_struct *ms, int x, int y, int *check)
+void	check_map_values(char c, t_map_struct *ms, int x, int y)
 {
 	if (c == '0' || c == ' ' || c == '1')
 		return ;
-	else if (c == 'N')
-	{
-		(*check)++;
-		ms->playerx = x;
-		ms->playery = y;
-		ms->playerview = 'N';
-	}
-	else if (c == 'S')
-	{
-		(*check)++;
-		ms->playerx = x;
-		ms->playery = y;
-		ms->playerview = 'S';
-	}
+	if (c == 'N' || c == 'S')
+		check_north_south(c, ms, x, y);
 	else if (c == 'E')
 	{
-		// printf("RERERERERERERERERERERERERER");
-		(*check)++;
+		(ms->check)++;
 		ms->playerx = x;
 		ms->playery = y;
 		ms->playerview = 'E';
 	}
 	else if (c == 'W')
 	{
-		(*check)++;
+		(ms->check)++;
 		ms->playerx = x;
 		ms->playery = y;
 		ms->playerview = 'W';
 	}
 	else
 		error_and_msg("Wrong Character", 2);
-	if (*check > 1)
+	if (ms->check > 1)
 		error_and_msg("To many start positions", 2);
 }
 
@@ -60,6 +47,7 @@ static	void	split_array(char ***arr, t_map_struct *ms)
 	int	i;
 
 	i = 0;
+	ms->input = (*arr);
 	if (arr_len(*arr) < 6)
 		error_and_msg("Missing Config Info", 2);
 	ms->config = ft_calloc(7, sizeof(char *));
@@ -96,25 +84,23 @@ static	void	make_map_rectangular(t_map_struct *ms, char	**non_rec_map_arr)
 {
 	int	i;
 	int	j;
-	int	check;
 
 	fill_map(ms);
 	i = 0;
-	check = 0;
-	// print_map(non_rec_map_arr);
 	while (ms->map[i] && non_rec_map_arr[i])
 	{
 			j = 0;
 		while (non_rec_map_arr[i][j])
 		{
 			ms->map[i][j] = non_rec_map_arr[i][j];
-			check_map_values(non_rec_map_arr[i][j], ms, j, i, &check);
+			check_map_values(non_rec_map_arr[i][j], ms, j, i);
 			j++;
 		}
 		i++;
 	}
-	if (check == 0)
+	if (ms->check == 0)
 		error_and_msg("No start position", 2);
+	flood_map(ms);
 }
 
 void	file_parser(t_map_struct *ms, int fd)
@@ -139,9 +125,9 @@ void	file_parser(t_map_struct *ms, int fd)
 			error_and_msg("Allocation Fail", 2);
 	}
 	non_rec_map_arr = split_mapstr(ms, mapstr, '\n');
+	free(mapstr);
 	if (non_rec_map_arr == NULL)
 		error_and_msg("Allocation Fail", 2);
 	split_array(&non_rec_map_arr, ms);
 	make_map_rectangular(ms, non_rec_map_arr);
-	flood_map(ms);
 }

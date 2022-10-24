@@ -6,7 +6,7 @@
 /*   By: ivelling <izaakvellinga@gmail.com>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/30 17:24:14 by ivelling      #+#    #+#                 */
-/*   Updated: 2022/10/23 16:58:50 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/24 16:42:53 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	main(int argc, char **argv)
 		error_and_msg("Empty or No File", 2);
 	ft_memset(&ms, 0, sizeof(t_map_struct));
 	file_parser(&ms, fd);
-	print_2d_array(ms.config);
 	init_textures(&ms);
-	ms.map[ms.height - 1] = NULL;
 	to_tomato_factory(ms);
 }

@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/23 17:01:45 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/24 17:45:23 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	to_tomato_factory(t_map_struct ref)
 	data.angle = 0.5 * PI * ((pv == 'E') + 2 * (pv == 'S') + 3 * (pv == 'W'));
 	data.player.x = ref.playerx + 0.5;
 	data.player.y = ref.height - ref.playery - 1.5;
-	printf("%i\t%i\t%f\t%f\n", ref.height, ref.playery, data.player.y, data.player.x);
+	// printf("%i\t%i\t%f\t%f\n", ref.height, ref.playery, data.player.y, data.player.x);
 	print_2d_array(ref.map);
 	return(izaaks_tomato_factory(&data));
 	return (1);

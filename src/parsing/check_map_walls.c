@@ -6,13 +6,31 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/13 18:51:07 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/23 16:34:49 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/24 16:33:21 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "utils.h"
 #include "libft.h"
+
+void	check_north_south(char c, t_map_struct *ms, int x, int y)
+{
+	if (c == 'N')
+	{
+		(ms->check)++;
+		ms->playerx = x;
+		ms->playery = y;
+		ms->playerview = 'N';
+	}
+	else if (c == 'S')
+	{
+		(ms->check)++;
+		ms->playerx = x;
+		ms->playery = y;
+		ms->playerview = 'S';
+	}
+}
 
 void	config_check(t_map_struct *ms)
 {
@@ -45,7 +63,7 @@ void	config_check(t_map_struct *ms)
 static int	check_map(t_map_struct	*ms, char **map, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= ms->with || y >= ms->height)
-		error_and_msg("Invalid map", 2);//return (2);
+		error_and_msg("Invalid map", 2);
 	if (map[y][x] == '1' || map[y][x] == 'X')
 		return (1);
 	if (map[y][x] == ' ')
@@ -60,9 +78,6 @@ static int	check_map(t_map_struct	*ms, char **map, int x, int y)
 
 void	flood_map(t_map_struct *ms)
 {
-	int	i;
-	
-	// print_map(ms->map);
-	i = check_map(ms, ms->map, ms->playerx, ms->playery);
-	// print_map(ms->map);
+	check_map(ms, ms->map, ms->playerx, ms->playery);
+	ms->map[ms->height] = NULL;
 }
