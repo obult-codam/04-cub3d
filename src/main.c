@@ -6,7 +6,7 @@
 /*   By: ivelling <izaakvellinga@gmail.com>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/30 17:24:14 by ivelling      #+#    #+#                 */
-/*   Updated: 2022/10/25 17:31:30 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/25 17:56:46 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ int	main(int argc, char **argv)
 	ft_memset(&ms, 0, sizeof(t_map_struct));
 	file_parser(&ms, fd);
 	init_textures(&ms);
-	print_2d_array(ms.map);
 	to_tomato_factory(ms);
 }
