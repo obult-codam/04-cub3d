@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/05 17:08:49 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/17 21:00:31 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/25 15:10:13 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*ft_make_str(t_map_struct *ms, const char *str, const char c)
 	len = ft_wrdlen(str, c);
 	if (len > ms->with)
 		ms->with = len;
-	rtrn = malloc(len * sizeof(char) + 1);
+	rtrn = malloc((len + 1) * sizeof(char));
 	if (rtrn == 0)
 		return (NULL);
 	while (*str != c)

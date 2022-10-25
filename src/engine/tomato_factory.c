@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/25 13:18:06 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 15:00:54 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	to_tomato_factory(t_map_struct ref)
 	t_data	data;
 	char	pv;
 
-	print_2d_array(ref.map);
+	// print_2d_array(ref.map);
 	pv = ref.playerview;
 	data.floor = (uint32_t)ref.floor;
 	data.ceiling = (uint32_t)ref.ceiling;
@@ -75,6 +75,6 @@ int	to_tomato_factory(t_map_struct ref)
 	data.player.x = ref.playerx + 0.5;
 	data.player.y = ref.height - ref.playery - 0.5;
 	printf("%i\t%i\t%f\t%f\n", ref.height, ref.playery, data.player.y, data.player.x);
-	print_2d_array(ref.map);
+	print_2d_array(data.map);
 	return(izaaks_tomato_factory(&data));
 }
