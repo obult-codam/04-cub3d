@@ -6,13 +6,33 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/13 18:51:07 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 17:36:57 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/25 18:37:27 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "utils.h"
 #include "libft.h"
+
+void	newline_checker(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n' && (str[i + 1] == '1' || str[i + 1] == '0'))
+		{
+			while (str[i])
+			{
+				if (str[i] == '\n' && (str[i + 1] == '\n' ))
+					error_and_msg("Consecutive Newlines", 2);
+				i++;
+			}
+		}
+		i++;
+	}
+}
 
 void	check_north_south(char c, t_map_struct *ms, int x, int y)
 {

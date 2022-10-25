@@ -6,7 +6,11 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/03 19:22:36 by ieilat        #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/10/25 17:52:38 by obult         ########   odam.nl         */
+=======
+/*   Updated: 2022/10/25 18:29:31 by ieilat        ########   odam.nl         */
+>>>>>>> 071f6be10a677fa5eac484901a0ce717625ccfaf
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +127,7 @@ void	file_parser(t_map_struct *ms, int fd)
 		if (mapstr == NULL)
 			error_and_msg("Allocation Fail", 2);
 	}
+	newline_checker(mapstr);
 	non_rec_map_arr = split_mapstr(ms, mapstr, '\n');
 	free(mapstr);
 	if (non_rec_map_arr == NULL)
