@@ -6,11 +6,10 @@ PARSER		= parsing/pars_file parsing/split_map_str parsing/check_map_walls\
 ENGINE		= ray ray_utils frame_render render_utils movement draw tomato_factory
 OBJ			= $(addprefix engine/, ${ENGINE}) ${PARSER} main
 OBJS		= $(addsuffix .o, $(addprefix obj/, ${OBJ}))
-RAY_TEST_OBJS	= $(addsuffix .o, $(addprefix obj/, ray_test ray ray_utils))
 CC			= gcc
 RM			= rm -f
 HEADER		= -I includes/ -I lib/mlx42/include/MLX42/
-CFLAGS		= #-fsanitize=address -g
+CFLAGS		= -Wall -Wextra -Werror #-fsanitize=address -g
 LINKFLAGS	= -lglfw -ldl -lm -O3 -L "/Users/$(USER)/.brew/opt/glfw/lib/"
 LIBMLX		= ./lib/mlx42
 
@@ -45,10 +44,6 @@ fclean:		clean
 				$(info ************  cub 3d ed Removed)
 
 re:			fclean all
-
-raytest:		${RAY_TEST_OBJS}
-				@${CC} ${RAY_TEST_OBJS} $(CFLAGS) -o test
-				./test
 
 run:		all
 				./${NAME} working.cub

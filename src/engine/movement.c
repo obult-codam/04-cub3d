@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/21 21:15:25 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/24 15:56:31 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 11:53:05 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,21 @@ void	move_left(t_data *data)
 		mod = 2;
 	data->player.x += sinf(data->angle - 0.5 * PI) * 0.05 * mod;
 	data->player.y += sinf(data->angle) * 0.05 * mod;
+}
+
+void	move(t_data *data, float x, float y)
+{
+	int	mod;
+
+	mod = 1;
+	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT_SHIFT))
+		mod = 2;
+	x = x * mod + data->player.x;
+	y = y * mod + data->player.y;
+	if (data->map[round_down(y)][round_down(x)] == '1')
+		return ;
+	data->player.x = x;
+	data->player.y = y;
 }
 
 void	key_check(t_data *data)
