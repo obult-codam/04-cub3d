@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/03 19:22:36 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 15:03:05 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 16:37:44 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,9 @@ static	void	fill_map(t_map_struct *ms)
 	ms->map[ms->height - 1] = NULL;
 	while (i < ms->height)
 	{
-		ms->map[i] = ft_calloc((ms->with + 1), sizeof(char));
+		ms->map[i] = ft_calloc(ms->with + 1, sizeof(char));
 		if (ms->map[i] == NULL)
 			error_and_msg("Allocation Fail", 2);
-		// ms->map[i][ms->with] = '\0';
 		ft_memset(ms->map[i], ' ', ms->with - 1);
 		i++;
 	}
