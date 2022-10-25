@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/03 19:19:21 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/24 16:23:31 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/25 18:37:17 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void	config_check(t_map_struct *ms);
 char	**split_mapstr(t_map_struct *ms, const char *str, char c);
 void	init_textures(t_map_struct *ms);
 void	check_north_south(char c, t_map_struct *ms, int x, int y);
+void	newline_checker(char *str);
 
 #endif 
