@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/03 19:22:36 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 18:47:51 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 20:49:10 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static	void	make_map_rectangular(t_map_struct *ms, char	**non_rec_map_arr)
 void	file_parser(t_map_struct *ms, int fd)
 {
 	int		ret;
-	char	temp[10000];
+	char	temp[10001];
 	char	*mapstr;
 	char	**non_rec_map_arr;
 

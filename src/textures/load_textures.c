@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/20 16:14:35 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 17:21:42 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/25 22:43:43 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,18 @@ static	unsigned int	set_color(char *str)
 		if (ft_isdigit(*outstr))
 		{
 			rgb_atoi(outstr, &outstr, &res);
-			arr[i++] = res;
+			arr[i] = res;
+			if (arr[i] < 0 || arr[i] > 255)
+				error_and_msg("Wrong Color Range", 2);
+			i++;
 		}
 		else if (*outstr == ' ' || *outstr == ',')
 			outstr++;
 		else
-			error_and_msg("Wrong Color input", 2);
+			error_and_msg("Wrong Color Input", 2);
 	}
 	if (*outstr != '\0')
-		error_and_msg("Wrong Color input", 2);
+		error_and_msg("Wrong Color Input", 2);
 	return (arr[0] << 24 | arr[1] << 16 | arr[2] << 8 | 0xff);
 }
 
@@ -116,5 +119,4 @@ void	init_textures(t_map_struct *ms)
 			error_and_msg("Textures missing or Wrong", 2);
 		i++;
 	}
-	printf("F = %lx\nC = %lx\n", ms->floor, ms->ceiling);
 }

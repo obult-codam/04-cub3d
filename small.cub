@@ -1,23 +1,24 @@
-F 220,100,0
+F 0,255,0
 C 225,30,0
 
-NO ./textures/1etusfinal.png
+NO ./textures/1x2.png
 
 
-SO ./textures/1etusfinal.png
+SO ./textures/2x2.png
 
 
 
-WE ./textures/P.png
+WE ./textures/100x1.png
 
 
 
 EA ./textures/P.png
 
-00000
+ 00000
 
-11111
-10001
-10N01
-10001
-11111
+
+111111
+100011
+10N011
+100011
+111111
