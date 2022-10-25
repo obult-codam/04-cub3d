@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/25 12:08:10 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 13:18:06 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "ray.h"
+
+void	complete_exit(void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	mlx_terminate(data->mlx);
+	exit (0);
+}
 
 char	**rev_map(char **map)
 {
@@ -42,10 +51,10 @@ int	izaaks_tomato_factory(t_data *data)
 		return (1);
 	data->img = mlx_new_image(data->mlx, 256, 256);
 	if (!data->img || (mlx_image_to_window(data->mlx, data->img, 0, 0) < 0))
-		return (2);
+		complete_exit(data);
+	mlx_close_hook(data->mlx, complete_exit, data);
 	mlx_loop_hook(data->mlx, frame_render, data);
 	mlx_loop(data->mlx);
-	mlx_terminate(data->mlx);
 	return (0);
 }
 

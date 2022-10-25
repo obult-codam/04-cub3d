@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 12:13:29 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/23 14:08:08 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 13:16:15 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,10 @@ void	frame_render(void *param);
  *	This function checks keypresses and updates the data acordingly.
  */
 void	key_check(t_data *data);
+
+/*
+ *	Executes mlx_terminate before exiting.
+ */
+void	complete_exit(void *param);
 
 #endif
