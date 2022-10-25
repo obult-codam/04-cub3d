@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/10 17:06:09 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/25 15:00:54 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 16:22:42 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	complete_exit(void *param)
 
 	data = (t_data *)param;
 	mlx_terminate(data->mlx);
-	exit (0);
+	exit(0);
 }
 
 char	**rev_map(char **map)
@@ -63,7 +63,7 @@ int	to_tomato_factory(t_map_struct ref)
 	t_data	data;
 	char	pv;
 
-	// print_2d_array(ref.map);
+	print_2d_array(ref.map);
 	pv = ref.playerview;
 	data.floor = (uint32_t)ref.floor;
 	data.ceiling = (uint32_t)ref.ceiling;
