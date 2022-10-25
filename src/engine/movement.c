@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/21 21:15:25 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/25 17:54:01 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 18:51:32 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,13 @@ void	key_check(t_data *data)
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 		data->angle = data->angle - dt;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-		move(data, sinf(data->angle) * dt, sinf(data->angle + 0.5 * PI)
-			* dt);
+		move(data, sinf(data->angle) * dt, sinf(data->angle + 0.5 * PI) * dt);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-		move(data, sinf(data->angle) * - dt, sinf(data->angle + 0.5 * PI)
-			* - dt);
+		move(data, sinf(data->angle) * -dt, sinf(data->angle + 0.5 * PI) * -dt);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-		move(data, sinf(data->angle - 0.5 * PI) * dt, sinf(data->angle)
-			* dt);
+		move(data, sinf(data->angle - 0.5 * PI) * dt, sinf(data->angle) * dt);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-		move(data, sinf(data->angle - 0.5 * PI) * - dt, sinf(data->angle)
-			* - dt);
+		move(data, sinf(data->angle - 0.5 * PI) * -dt, sinf(data->angle) * -dt);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		complete_exit(data);
 }

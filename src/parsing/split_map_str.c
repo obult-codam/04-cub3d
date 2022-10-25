@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/05 17:08:49 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 17:28:14 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/25 18:48:20 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ char	**split_mapstr(t_map_struct *ms, const char *str, char c)
 	if (!str)
 		return (NULL);
 	i = 0;
+	newline_checker(str);
 	chr_arr = ft_calloc(ft_wrd_cnt(str, c) + 1, sizeof(char *));
 	ms->height = ft_wrd_cnt(str, c) + 1;
 	if (!chr_arr)
