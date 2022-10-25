@@ -6,14 +6,14 @@
 #    By: Ivellinga <izaakvellinga@gmail.com>          +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/11 22:02:50 by ieilat        #+#    #+#                  #
-#    Updated: 2022/10/25 16:55:42 by obult         ########   odam.nl          #
+#    Updated: 2022/10/25 17:31:01 by ieilat        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 HEADER_FILES = libft.h printf.h
 HEADER_DIR = includes
-FLAGS = -Wall -Werror -Wextra -pedantic -g -fsanitize=address #-std=c89 
+FLAGS = -Wall -Werror -Wextra -pedantic #-g #-fsanitize=address #-std=c89 
 REG_SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 ft_memchr.c ft_memcmp.c ft_strlen.c ft_strlcpy.c ft_strlcat.c ft_strchr.c \
 ft_strrchr.c ft_strnstr.c ft_strncmp.c ft_atoi.c ft_isalpha.c ft_isdigit.c \

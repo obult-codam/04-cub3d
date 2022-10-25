@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/13 18:51:07 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 14:58:59 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 17:36:57 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,5 @@ static int	check_map(t_map_struct	*ms, char **map, int x, int y)
 void	flood_map(t_map_struct *ms)
 {
 	check_map(ms, ms->map, ms->playerx, ms->playery);
+	ms->map[ms->height] = NULL;
 }

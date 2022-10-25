@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/20 16:14:35 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/24 16:24:55 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/25 17:21:42 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,9 @@ static	char	*skip_spaces(char *str)
 {
 	char	*temp;
 	int		i;
-	int		len;
 
 	temp = str + 2;
 	i = 0;
-	len = ft_strlen(str - 2);
 	while (*temp == ' ')
 		temp++;
 	return (temp);

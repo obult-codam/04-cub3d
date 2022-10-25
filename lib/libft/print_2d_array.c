@@ -6,12 +6,11 @@
 /*   By: ivellinga <Izaakvellinga@gmail.com>          +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/24 21:38:02 by ivellinga     #+#    #+#                 */
-/*   Updated: 2022/10/25 15:21:53 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 17:36:02 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
-#include <stdio.h>
 
 void	print_2d_array(char **arr)
 {
@@ -20,7 +19,7 @@ void	print_2d_array(char **arr)
 	i = 0;
 	while (*arr)
 	{
-		printf("{%d} = %s\n", i, *arr);
+		ft_printf("{%d} = %s\n", i, *arr);
 		i++;
 		arr++;
 	}

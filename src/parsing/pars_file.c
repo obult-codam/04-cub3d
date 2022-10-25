@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/03 19:22:36 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 16:37:44 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 17:34:34 by ieilat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,13 @@ static	void	split_array(char ***arr, t_map_struct *ms)
 	config_check(ms);
 }
 
-#include <stdio.h>
-
 static	void	fill_map(t_map_struct *ms)
 {
 	int	i;
 
 	i = 0;
 	printf("h: %i\n", ms->height);
-	ms->map = malloc(ms->height * sizeof(char *));
+	ms->map = malloc((ms->height + 1) * sizeof(char *));
 	if (ms->map == NULL)
 		error_and_msg("Allocation Fail", 2);
 	ms->map[ms->height - 1] = NULL;
