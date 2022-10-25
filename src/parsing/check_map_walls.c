@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/13 18:51:07 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 18:37:27 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/25 19:16:07 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	newline_checker(char *str)
 				i++;
 			}
 		}
-		i++;
+		else
+			i++;
 	}
 }
 

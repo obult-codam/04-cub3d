@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/03 19:19:21 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 18:37:17 by ieilat        ########   odam.nl         */
+/*   Updated: 2022/10/25 19:10:32 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_map_struct
 void	file_parser(t_map_struct *ms, int fd);
 void	flood_map(t_map_struct *ms);
 void	config_check(t_map_struct *ms);
-char	**split_mapstr(t_map_struct *ms, const char *str, char c);
+char	**split_mapstr(t_map_struct *ms, char *str, char c);
 void	init_textures(t_map_struct *ms);
 void	check_north_south(char c, t_map_struct *ms, int x, int y);
 void	newline_checker(char *str);

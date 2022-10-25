@@ -1,6 +1,6 @@
-F 255,204,0<-
-C 0,0,0<-
-NO ./textures/Cetusfinal.png
+F 255,204,0
+C 0,0,0
+NO ./textures/1etusfinal.png
 SO ./textures/hell.png
 WE ./textures/hell.png
 EA ./textures/hell.png

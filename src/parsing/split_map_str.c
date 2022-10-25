@@ -6,7 +6,7 @@
 /*   By: ieilat <ieilat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/05 17:08:49 by ieilat        #+#    #+#                 */
-/*   Updated: 2022/10/25 18:48:20 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/25 19:10:46 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	*ft_free_string(char **chr_arr, int i, int check)
 	return (NULL);
 }
 
-char	**split_mapstr(t_map_struct *ms, const char *str, char c)
+char	**split_mapstr(t_map_struct *ms, char *str, char c)
 {
 	int		i;
 	char	**chr_arr;
