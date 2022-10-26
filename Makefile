@@ -46,6 +46,6 @@ fclean:		clean
 re:			fclean all
 
 run:		all
-				./${NAME} working.cub
+				./${NAME} maps/working.cub
 
 .PHONY: all clean fclean re
