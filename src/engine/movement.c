@@ -6,7 +6,7 @@
 /*   By: obult <obult@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/21 21:15:25 by obult         #+#    #+#                 */
-/*   Updated: 2022/10/25 18:51:32 by obult         ########   odam.nl         */
+/*   Updated: 2022/10/26 11:43:26 by obult         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,9 @@ void	move(t_data *data, float x, float y)
 	y = y * mod + data->player.y;
 	rx = round_down(x);
 	ry = round_down(y);
-	if (ry >= 0 && ry < data->y_max && rx >= 0 && rx < data->x_max)
-	{
-		if (data->map[ry][rx] != 'X')
-			return ;
-	}
-	else
+	if (ry < 0 || ry >= data->y_max || rx < 0 || rx >= data->x_max)
+		return ;
+	if (data->map[ry][rx] != 'X')
 		return ;
 	data->player.x = x;
 	data->player.y = y;
